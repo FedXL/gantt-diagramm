@@ -1,0 +1,34 @@
+{% extends 'interface/base.html' %}
+{% block content %}
+<h1>{{title}}</h1>
+<form action="{%url 'data_info'%}" method="post" name="form" enctype="multipart/form-data">
+	{% csrf_token %}
+	<table border="2px">
+		<thead>
+		<tr>
+			<th colspan="{{sr_num}}"> Параметры полученные в результате фигни</th>
+		</tr>
+
+		</thead>
+
+
+		<tr>
+			<td>Номер детали</td>
+			{% for i in st %}
+			<td>Станок: {{i}} </td>
+			{% endfor %}
+		</tr>
+			{% for i in date %}
+
+		<tr>
+			<td>деталь_{{forloop.counter0}}</td>
+			{% for j in i %}
+			<td><input type="text" value="{{j}}" name = '01'></td>
+			{% endfor %}
+		</tr>
+			{% endfor %}
+	</table>
+<button>сохранить</button>
+
+</form>
+{% endblock %}

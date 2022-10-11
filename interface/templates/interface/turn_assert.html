@@ -1,0 +1,70 @@
+{%extends 'interface/base.html'%}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'interface/css/turn_assert.css'%}" type="text/css">
+<div class="BoxMaster">
+<h1>таблица Очередь-детали</h1>
+
+
+<ul>
+{% for i in submenu %}
+        <li><button class="a_button"> <a href="{%url i.url_name%}">{{i.title}}</a></button></li>
+{% endfor %}
+</ul>
+<br>
+{% for i in submenu2 %}
+        <button class="a_button"> <a href="{%url i.url_name%}">{{i.title}}</a></button>
+{% endfor %}
+
+<div>
+    </div>
+<div class="table_cont">
+<form action="{%url 'save'%}" method="post">
+    {% csrf_token %}
+    <table >
+        <tr>
+            <th colspan="{{sr_num}}">Методы:
+                    {% for i in turn3%}
+                        <span>{{i}}</span>
+                    {%endfor%}
+            </th>
+        </tr>
+        <tr>
+            <th>Очередность</th>
+            <th>Детали</th>
+                {%for i in tools_series%}
+                    <th>Ст-{{forloop.counter0}}</th>
+                {%endfor%}
+        </tr>
+
+        {% for i,j in det_val.items %}
+            <tr>
+                <td class="special_td"><input class="input_td" min="0" type="number" required="required"
+                                              name="turns" value="{{forloop.counter0}}"></td>
+                <td>
+                    Деталь-{{i}}
+                    <input type="hidden" name="details" value="{{i}}">
+                </td>
+                {% for z in j%}
+                    <td>{{z}}</td>
+                {% endfor %}
+            </tr>
+        {%endfor%}
+        <tfoot>
+        <tr>
+            <td colspan="{{sr_num}}">
+                <input type="hidden" name="table" value="turn-details">
+             <button type="submit" class="table_button">Сохранить изменения</button>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+</form>
+</div>
+<form action="{%url 'result'%}">
+<button class="input_button" >Меня всё устраивает, Поехали дальше.</button>
+</form>
+    <div class="pusher"></div>
+    </div>
+{% endblock %}
